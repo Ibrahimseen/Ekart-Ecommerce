@@ -1,40 +1,40 @@
 import nodemailer from "nodemailer";
 
-export const verifyEmail = (token, email) => {
-  console.log("--- Email Sending Debug Start ---");
-  console.log("Target Email:", email);
-  console.log("MAIL_USER Variable Env Se:", process.env.MAIL_USER);
-  console.log("MAIL_PASS Variable Exist Karta Hai?:", process.env.MAIL_PASS ? "Yes" : "No");
+// export const verifyEmail = (token, email) => {
+//   console.log("--- Email Sending Debug Start ---");
+//   console.log("Target Email:", email);
+//   console.log("MAIL_USER Variable Env Se:", process.env.MAIL_USER);
+//   console.log("MAIL_PASS Variable Exist Karta Hai?:", process.env.MAIL_PASS ? "Yes" : "No");
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS,
-    },
-  });
+//   const transporter = nodemailer.createTransport({
+//     service: "gmail",
+//     auth: {
+//       user: process.env.MAIL_USER,
+//       pass: process.env.MAIL_PASS,
+//     },
+//   });
 
-  const mailConfigurations = {
-    from: process.env.MAIL_USER,
-    to: email,
-    subject: "Email Verification",
+//   const mailConfigurations = {
+//     from: process.env.MAIL_USER,
+//     to: email,
+//     subject: "Email Verification",
 
-    text: `Hi! There, You have recently visited
-           our website and entered your email.
-           Please follow the given link to verify your email
-           https://ekart-frontend-ug4u.onrender.com/verify/${token}
-           Thanks`,
-  };
-  transporter.sendMail(mailConfigurations, function (error, info) {
-     if (error) {
-      // ❌ Server crash nahi hoga, sirf terminal mein error dikhega
-      console.error("Verification Email Sending Failed:", error);
-      return;
-    }
-    console.log("Email Sent Successfully");
-    console.log(info);
-  });
-};
+//     text: `Hi! There, You have recently visited
+//            our website and entered your email.
+//            Please follow the given link to verify your email
+//            https://ekart-frontend-ug4u.onrender.com/verify/${token}
+//            Thanks`,
+//   };
+//   transporter.sendMail(mailConfigurations, function (error, info) {
+//      if (error) {
+//       // ❌ Server crash nahi hoga, sirf terminal mein error dikhega
+//       console.error("Verification Email Sending Failed:", error);
+//       return;
+//     }
+//     console.log("Email Sent Successfully");
+//     console.log(info);
+//   });
+// };
 
 // export const verifyEmail = (token, email) => {
 //   // Dono functions ke andar transporter ko is tarah update karein:
@@ -74,3 +74,50 @@ export const verifyEmail = (token, email) => {
 //     console.log(info);
 //   });
 // };
+
+export const verifyEmail = async (token, email) => {
+  try {
+    console.log("=== EMAIL DEBUG START ===");
+    console.log("Target Email:", email);
+    console.log("MAIL_USER:", process.env.MAIL_USER);
+    console.log(
+      "MAIL_PASS Exists:",
+      process.env.MAIL_PASS ? "YES" : "NO"
+    );
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+      connectionTimeout: 30000,
+    });
+
+    await transporter.verify();
+    console.log("✅ SMTP Connection Successful");
+
+    const info = await transporter.sendMail({
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: "Email Verification",
+      text: `
+Hi!
+
+Please verify your email by clicking the link below:
+
+    https://ekart-frontend-ug4u.onrender.com/verify/${token}
+
+Thanks
+      `,
+    });
+
+    console.log("✅ Email Sent Successfully");
+    console.log(info.response);
+  } catch (error) {
+    console.error("❌ Email Error:");
+    console.error(error);
+  }
+};
