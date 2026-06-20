@@ -24,16 +24,17 @@ const Cart = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   const loadCart = async () => {
-     const baseURL = import.meta.env.VITE_API_URL;
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
       const res = await axios.get(
         // API,
-         `${baseURL}`,
-         {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+        `${baseURL}/api/v1/cart`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      });
+      );
       if (res.data.success) {
         dispatch(setCart(res.data.cart));
       }
@@ -43,10 +44,10 @@ const Cart = () => {
   };
 
   const handleUpdateQuantity = async (productId, type) => {
-     const baseURL = import.meta.env.VITE_API_URL;
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
       const res = await axios.put(
-        `${baseURL}/update`,
+       `${baseURL}/api/v1/cart/update`,
         { productId, type },
         {
           headers: {
@@ -63,9 +64,9 @@ const Cart = () => {
   };
 
   const handleRemove = async (productId) => {
-     const baseURL = import.meta.env.VITE_API_URL;
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
-      const res = await axios.delete(`${baseURL}/remove`, {
+      const res = await axios.delete(`${baseURL}/api/v1/cart/remove`, {
         headers: { Authorization: `Bearer ${accessToken}` },
         data: { productId }, // ✅ use productId, not id
       });
@@ -76,12 +77,14 @@ const Cart = () => {
     } catch (error) {
       console.log(error);
     }
+    finally{
+        console.log(baseURL);
+    }
   };
 
   useEffect(() => {
     loadCart();
   }, [dispatch]);
-
 
   return (
     <>
@@ -188,7 +191,11 @@ const Cart = () => {
                         <Button variant="outline">Apply</Button>
                       </div>
 
-                      <Button onClick={()=> navigate("/address")} size="lg" className="w-full bg-pink-600">
+                      <Button
+                        onClick={() => navigate("/address")}
+                        size="lg"
+                        className="w-full bg-pink-600"
+                      >
                         PLACE ORDER
                       </Button>
 
