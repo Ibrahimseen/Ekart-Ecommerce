@@ -15,9 +15,8 @@ app.use(express.json());
 
 app.use(
   cors({
-    // origin: "http://localhost:5173",
-     origin: "https://ekart-frontend-ug4u.onrender.com/",
-    
+   origin: ["http://localhost:5173", "https://ekart-frontend-ug4u.onrender.com"],
+    //  origin: "https://ekart-frontend-ug4u.onrender.com",
     credentials: true,
   }),
 );
