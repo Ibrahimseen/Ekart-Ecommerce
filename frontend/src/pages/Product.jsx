@@ -25,10 +25,13 @@ const Product = () => {
   const dispatch = useDispatch();
 
   const getAllProducts = async () => {
+     const baseURL = import.meta.env.VITE_API_URL;
     try {
       setloading(true);
       const res = await axios.get(
-        `http://localhost:3000/api/v1/product/getallproducts`,
+        // `http://localhost:3000/api/v1/product/getallproducts`,
+         `${baseURL}/api/v1/product/getallproducts`,   
+
       );
       if (res.data.success) {
         setallproducts(res.data.products);

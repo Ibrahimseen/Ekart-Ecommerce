@@ -12,8 +12,10 @@ const Order = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   const getUserOrders = async () => {
+    const baseURL = import.meta.env.VITE_API_URL;
     const res = await axios.get(
-      `http://localhost:3000/api/v1/orders/user-order/${params.id}`,
+      // `http://localhost:3000/api/v1/orders/user-order/${params.id}`,
+      `${baseURL}/api/v1/orders/user-order/${params.id}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -33,7 +35,7 @@ const Order = () => {
   console.log(params.userId);
   return (
     <div className="pl-80.5 py-20 pr-50 flex flex-col gap-3">
-        {/* <div className=" pr-20 flex flex-col gap-3"> */}
+      {/* <div className=" pr-20 flex flex-col gap-3"> */}
       <div className="w-full p-6">
         <div className="flex items-center gap-4 mb-6">
           <Button onClick={() => navigate(-1)}>

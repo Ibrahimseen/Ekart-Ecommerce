@@ -98,10 +98,12 @@ const AdminProduct = () => {
       .forEach((file) => {
         formData.append("files", file);
       });
-
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
       const res = await axios.put(
-        `http://localhost:3000/api/v1/product/update/${editProduct._id}`,
+        // `http://localhost:3000/api/v1/product/update/${editProduct._id}`,
+        `${baseURL}/api/v1/product/update/${editProduct._id}`,
+
         formData,
         { headers: { Authorization: `Bearer ${accessToken}` } },
       );
@@ -120,12 +122,15 @@ const AdminProduct = () => {
   };
 
   const deleteProductHandler = async (productId) => {
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
       const remainingProducts = products.filter(
         (product) => product._id !== productId,
       );
       const res = await axios.delete(
-        `http://localhost:3000/api/v1/product/delete/${productId}`,
+        // `http://localhost:3000/api/v1/product/delete/${productId}`,
+        `${baseURL}/api/v1/product/delete/${productId}`,
+
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -138,7 +143,7 @@ const AdminProduct = () => {
       }
     } catch (error) {
       toast.error("Something went wrong");
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -185,7 +190,7 @@ const AdminProduct = () => {
               </h1>
               <div className="flex gap-3">
                 <Dialog open={open} onOpenChange={setOpen}>
-                  <DialogTrigger >
+                  <DialogTrigger>
                     <Edit
                       onClick={() => {
                         (setOpen(true), setEditProduct(product));
@@ -266,7 +271,7 @@ const AdminProduct = () => {
                       />
                     </div>
                     <DialogFooter>
-                      <DialogClose >
+                      <DialogClose>
                         <Button variant="outline">Cancel</Button>
                       </DialogClose>
                       <Button onClick={handleSave} type="submit">
@@ -277,7 +282,7 @@ const AdminProduct = () => {
                 </Dialog>
                 {/* -----------------X----------------- */}
                 <AlertDialog>
-                  <AlertDialogTrigger >
+                  <AlertDialogTrigger>
                     <Trash2 className="text-red-500 cursor-pointer" />
                   </AlertDialogTrigger>
                   <AlertDialogContent>

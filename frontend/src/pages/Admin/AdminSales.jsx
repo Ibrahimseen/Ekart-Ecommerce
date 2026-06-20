@@ -20,11 +20,17 @@ const AdminSales = () => {
   });
 
   const fetchStats = async () => {
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.get("http://localhost:3000/api/v1/orders/sales", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        // "http://localhost:3000/api/v1/orders/sales",
+        `${baseURL}/api/v1/orders/sales`,
+
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       if (res.data.success) {
         setStats(res.data);
         // console.log(res.data);
@@ -82,7 +88,7 @@ const AdminSales = () => {
           <CardHeader>
             <CardTitle>Sales (Last 30 Days)</CardTitle>
           </CardHeader>
-          <CardContent style={{ height: 300 }} >
+          <CardContent style={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={stats.sales}>
                 <XAxis dataKey="date" />

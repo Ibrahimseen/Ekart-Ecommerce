@@ -37,11 +37,13 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log(formData);
-
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:3000/api/v1/user/login",
+        // "http://localhost:3000/api/v1/user/login",
+        `${baseURL}/api/v1/user/login`,
+
         formData,
         {
           headers: { "Content-Type": "application/json" },

@@ -10,10 +10,12 @@ import axios from "axios";
 const ProductDesc = ({ product }) => {
   const dispatch = useDispatch();
   const accessToken = localStorage.getItem("accessToken");
- const addToCart = async (productId) => {
+  const addToCart = async (productId) => {
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/v1/cart/add`,
+        // `http://localhost:3000/api/v1/cart/add`,
+        `${baseURL}/api/v1/cart/add`,
         { productId },
         {
           headers: { Authorization: `Bearer ${accessToken}` },

@@ -46,9 +46,12 @@ const AddressForm = () => {
   };
 
   const handlePayment = async () => {
+     const baseURL = import.meta.env.VITE_API_URL;
+      
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/v1/orders/create-order",
+        // "http://localhost:3000/api/v1/orders/create-order",
+         `${baseURL}/api/v1/orders/create-order`,
         {
           products: cart?.items?.map((item) => ({
             productId: item.productId._id,

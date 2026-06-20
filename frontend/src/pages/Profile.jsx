@@ -32,6 +32,8 @@ const Profile = () => {
 
   const [file, setFile] = useState(null);
 
+  const baseURL = import.meta.env.VITE_API_URL;
+
   const handleChange = (e) => {
     setUpdateUser({ ...updateUser, [e.target.name]: e.target.value });
   };
@@ -65,7 +67,8 @@ const Profile = () => {
       }
       setLoading(true);
       const res = await axios.put(
-        `http://localhost:3000/api/v1/user/update/${userId}`,
+        // `http://localhost:3000/api/v1/user/update/${userId}`,
+         `${baseURL}/api/v1/user/update/${userId}`,   
         formData,
         {
           headers: {
@@ -246,8 +249,8 @@ const Profile = () => {
           </div>
         </TabsContent>
         <TabsContent value="orders">
-                    <MyOrder/>
-                </TabsContent>
+          <MyOrder />
+        </TabsContent>
       </Tabs>
     </div>
   );

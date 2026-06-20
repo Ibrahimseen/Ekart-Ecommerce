@@ -38,10 +38,13 @@ const Signup = () => {
     e.preventDefault();
     console.log(formData);
 
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await axios.post(
-        "http://localhost:3000/api/v1/user/register",
+        // "http://localhost:3000/api/v1/user/register",
+        `${baseURL}/api/v1/user/register`,
+
         formData,
         {
           headers: { "Content-Type": "application/json" },
@@ -54,9 +57,8 @@ const Signup = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
-    }
-    finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -147,7 +149,14 @@ const Signup = () => {
               onClick={submitHandler}
               className="w-full cursor-pointer bg-pink-600 hover:bg-pink-500"
             >
-             {Loading ? <> <Loader2/> Please wait </>: "Signup"}
+              {Loading ? (
+                <>
+                  {" "}
+                  <Loader2 /> Please wait{" "}
+                </>
+              ) : (
+                "Signup"
+              )}
             </Button>
             <p className="text-gray text-sm">
               already have a account?

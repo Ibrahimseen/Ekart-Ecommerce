@@ -66,7 +66,9 @@ const UserInfo = () => {
       }
 
       const res = await axios.put(
-        `http://localhost:3000/api/v1/user/update/${userId}`,
+        // `http://localhost:3000/api/v1/user/update/${userId}`,
+      `${baseURL}/api/v1/user/update/${userId}`,
+
         formData,
         {
           headers: {

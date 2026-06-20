@@ -9,9 +9,12 @@ const AdminOrders = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
+      const baseURL = import.meta.env.VITE_API_URL;
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/api/v1/orders/all",
+          // "http://localhost:3000/api/v1/orders/all",
+          `${baseURL}/api/v1/orders/all`,
+
           {
             headers: { Authorization: `Bearer ${accessToken}` },
           },

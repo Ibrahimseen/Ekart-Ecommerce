@@ -24,8 +24,12 @@ const Cart = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   const loadCart = async () => {
+     const baseURL = import.meta.env.VITE_API_URL;
     try {
-      const res = await axios.get(API, {
+      const res = await axios.get(
+        // API,
+         `${baseURL}`,
+         {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -39,9 +43,10 @@ const Cart = () => {
   };
 
   const handleUpdateQuantity = async (productId, type) => {
+     const baseURL = import.meta.env.VITE_API_URL;
     try {
       const res = await axios.put(
-        `${API}/update`,
+        `${baseURL}/update`,
         { productId, type },
         {
           headers: {
@@ -58,8 +63,9 @@ const Cart = () => {
   };
 
   const handleRemove = async (productId) => {
+     const baseURL = import.meta.env.VITE_API_URL;
     try {
-      const res = await axios.delete(`${API}/remove`, {
+      const res = await axios.delete(`${baseURL}/remove`, {
         headers: { Authorization: `Bearer ${accessToken}` },
         data: { productId }, // ✅ use productId, not id
       });

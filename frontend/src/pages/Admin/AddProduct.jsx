@@ -33,7 +33,7 @@ const AddProduct = () => {
     brand: "",
     category: "",
   });
-  const handleChange = (e) => { 
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setProductData((prev) => ({
       ...prev,
@@ -59,10 +59,14 @@ const AddProduct = () => {
     productData.productImg.forEach((img) => {
       formData.append("files", img);
     });
+    const baseURL = import.meta.env.VITE_API_URL;
+
     try {
       setLoading(true);
       const res = await axios.post(
-        `http://localhost:3000/api/v1/product/add`,
+        // `http://localhost:3000/api/v1/product/add`,
+        `${baseURL}/api/v1/product/add`,
+
         formData,
         {
           headers: {

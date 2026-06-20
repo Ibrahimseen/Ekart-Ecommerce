@@ -11,8 +11,12 @@ const ShowUserOrder = () => {
 
   const getUserOrders = async () => {
     const accessToken = localStorage.getItem("accessToken");
+    const baseURL = import.meta.env.VITE_API_URL;
+
     const res = await axios.get(
-      `http://localhost:3000/api/v1/orders/user-order/${params.userId}`,
+      // `http://localhost:3000/api/v1/orders/user-order/${params.userId}`,
+      `${baseURL}/api/v1/orders/user-order/${params.userId}`,
+
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -20,7 +24,7 @@ const ShowUserOrder = () => {
       },
     );
     if (res.data.success) {
-      setUserOrder(res.data.orders);  
+      setUserOrder(res.data.orders);
     }
   };
 

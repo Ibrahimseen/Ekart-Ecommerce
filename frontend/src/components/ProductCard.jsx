@@ -15,9 +15,11 @@ const ProductCard = ({ product, loading }) => {
   const navigate = useNavigate();
 
   const addToCart = async (productId) => {
+    const baseURL = import.meta.env.VITE_API_URL;
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/v1/cart/add`,                                                                      
+        // `http://localhost:3000/api/v1/cart/add`,
+        `${baseURL}/api/v1/cart/add`,
         { productId },
         {
           headers: {
@@ -41,7 +43,7 @@ const ProductCard = ({ product, loading }) => {
           <Skeleton className="w-full h-full rounded-lg" />
         ) : (
           <img
-          onClick={()=> navigate(`/products/${product._id}`)}
+            onClick={() => navigate(`/products/${product._id}`)}
             src={productImg[0]?.url}
             alt=""
             className="w-full h-full transition-transform duration-300 hover:scale-105 cursor-pointer"

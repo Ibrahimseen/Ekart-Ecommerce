@@ -16,9 +16,11 @@ const Navbar = () => {
 
 
   const logoutHandler = async () => {
+      const baseURL = import.meta.env.VITE_API_URL;
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/v1/user/logout`,
+        // `http://localhost:3000/api/v1/user/logout`,
+         `${baseURL}/api/v1/user/logout`,
         {},
         {
           headers: {
