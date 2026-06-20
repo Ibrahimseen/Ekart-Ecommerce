@@ -158,6 +158,15 @@ const Login = () => {
                 "Login"
               )}
             </Button>
+            <p style={{ marginTop: "15px", textAlign: "center" }}>
+              Don't have an account?{" "}
+              <Link
+                to="/signup"
+                style={{ color: "blue", textDecoration: "underline" }}
+              >
+                Sign Up here
+              </Link>
+            </p>
           </CardFooter>
           <div> </div>
         </Card>
