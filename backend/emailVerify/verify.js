@@ -58,7 +58,7 @@ import nodemailer from "nodemailer";
 //     subject: "Email Verification - EKART",
 //     text: `Hi! There, You have recently visited our website and entered your email.
 //     Please follow the given link to verify your email:
-//     https://ekart-frontend-ug4u.onrender.com/verify/${token} 
+//     https://ekart-frontend-ug4u.onrender.com/verify/${token}
 
 //     Thanks,
 //     EKART Team`,
@@ -80,22 +80,20 @@ export const verifyEmail = async (token, email) => {
     console.log("=== EMAIL DEBUG START ===");
     console.log("Target Email:", email);
     console.log("MAIL_USER:", process.env.MAIL_USER);
-    console.log(
-      "MAIL_PASS Exists:",
-      process.env.MAIL_PASS ? "YES" : "NO"
-    );
+    console.log("MAIL_PASS Exists:", process.env.MAIL_PASS ? "YES" : "NO");
 
+    //
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false,
+      family: 4,
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
       },
-      connectionTimeout: 30000,
     });
-
+    //
     await transporter.verify();
     console.log("✅ SMTP Connection Successful");
 
