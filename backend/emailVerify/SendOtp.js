@@ -24,17 +24,18 @@ import nodemailer from "nodemailer";
 // };
 
 export const sendOtpMail = async (otp, email) => {
+  // Dono functions ke andar transporter ko is tarah update karein:
   const transporter = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // 587 ke liye hamesha false rakhein
+    port: 465, // 👈 587 se badal kar 465 kar dein
+    secure: true, // 👈 false se badal kar true kar dein (465 ke liye true lazmi hai)
     auth: {
       user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS, // ⚠️ Gmail ka 16-digit App Password hona chahiye
+      pass: process.env.MAIL_PASS, // 16-digit App Password hona chahiye
     },
     tls: {
-      rejectUnauthorized: false, // 👈 Render par timeout/connection errors ko rokne ke liye zaroori hai
+      rejectUnauthorized: false,
     },
   });
 
