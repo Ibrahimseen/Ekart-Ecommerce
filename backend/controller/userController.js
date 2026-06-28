@@ -9,7 +9,7 @@ import cloudinary from "../utils/cloudinary.js";
 export const register = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
-    if (!firstName || !lastName || !email || !password) {
+    if (!firstName || !lastName || !email || !password ) {
       res.status(400).json({
         success: false,
         message: "All field are required",
@@ -29,14 +29,15 @@ export const register = async (req, res) => {
       lastName,
       email,
       password: hashedpassword,
+      isVerified: true,
     });
 
-    const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, {
-      expiresIn: "10min",
-    });
-    verifyEmail(token, email);
-    newUser.token = token;
-    await newUser.save();
+    // const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, {
+    //   expiresIn: "10min",
+    // });
+    // verifyEmail(token, email);
+    // newUser.token = token;
+    // await newUser.save();
 
     return res.status(201).json({
       success: true,
@@ -160,12 +161,12 @@ export const Login = async (req, res) => {
         message: "Invalid Password",
       });
     }
-    if (existingUser.isVerified == false) {
-      return res.status(400).json({
-        success: false,
-        message: "please Verify your account before Logining",
-      });
-    }
+    // if (existingUser.isVerified == false) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "please Verify your account before Logining",
+    //   });
+    // }
     const accessToken = jwt.sign(
       { id: existingUser._id },
       process.env.SECRET_KEY,
